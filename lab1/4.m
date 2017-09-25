@@ -12,3 +12,4 @@ F2 = repmat(F, 2, 2);
 F2(F2 < 0) = 0;
 
 surf(X2,Y2,F2);
+axis tight
