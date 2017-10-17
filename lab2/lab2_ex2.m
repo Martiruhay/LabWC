@@ -5,8 +5,8 @@ function lab2_ex2(inputImage, fractions)
 
 histogram = zeros(fractions, 1);
 
-for x = 2:(r-1)
-    for y = 2:(c-1)
+for x = 1:(r)
+    for y = 1:(c)
         amm = inputImage(x,y);
         index = ceil(amm/fractions);
         if(index <= 0)
