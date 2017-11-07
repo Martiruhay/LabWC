@@ -30,7 +30,7 @@ imshow(BM);
 I = imread('cafe.tif');
 BW = I < 16;
 % imshow(BW);
-% Ara cal separar objectes 'dèbilment' connectats
+% Ara cal separar objectes 'dÃ¨bilment' connectats
 SE = strel('disk',9);
 EI = imerode(BW,SE);
 imshow(EI);
@@ -95,11 +95,10 @@ BDT = DT > 30;
 imshow(BDT, []);
 C = bwconncomp(BDT);
 npixels = cellfun(@numel,C.PixelIdxList);
-[x,ncells] = size(npixels);
+[,ncells] = size(npixels);
 S = regionprops(C,'centroid');
-
-f = @(pos) insertMarker(I, pos.Centroid);
-result = arrayfun(f, S);
+centroids = cat(1, S.Centroid);
+I = insertMarker(I, centroids);
 imshow(I);
 
 
