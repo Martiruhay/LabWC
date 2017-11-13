@@ -30,7 +30,7 @@ imshow(BM);
 I = imread('cafe.tif');
 BW = I < 16;
 % imshow(BW);
-% Ara cal separar objectes 'dèbilment' connectats
+% Ara cal separar objectes 'dÃ¨bilment' connectats
 SE = strel('disk',9);
 EI = imerode(BW,SE);
 imshow(EI);
@@ -76,8 +76,7 @@ C = bwconncomp(R);
 npixels = cellfun(@numel,C.PixelIdxList);
 npues = sum(npixels > 5);
 
-%% Exercici 2:
-
+%% Exercici 2 (codi de classe):
 I = imread('normal-blood1.jpg');
 G = rgb2gray(I);
 BWu = G < 200;
@@ -102,4 +101,23 @@ f = @(pos) insertMarker(I, pos.Centroid);
 arrayfun(f, S);
 imshow(I);
 
+%% Exercici 2 (Hamster):
+I = imread('normal-blood1.jpg');
+Ig = rgb2gray(I);
+BW = Ig < 180;
+BW = imfill(BW, 'holes');
+
+DT = bwdist(1-BW, 'euclidean');
+BW2 = DT > 6;
+
+BW2 = bwareaopen(BW2,20);
+
+%imshowpair(BW, BW2, 'montage');
+
+cc = bwconncomp(BW2);
+s = regionprops(cc, 'Centroid');
+centroids = cat(1, s.Centroid);
+
+I = insertMarker(I, centroids);
+imshow(I);
 
