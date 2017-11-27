@@ -1,14 +1,15 @@
-%% Esquema Cl√°ssic de classificaci√≥ d'imatges
+%% Esquema Cl·ssic de classificaciÛ d'imatges
 %
 % Imatge 
 % Preprocessat(filtrar soroll, resaltar rellevancies)
 % Binaritzat (d'aquells elements importants)
-% Segmentaci√≥ (agrupar els objectes)
-% Caracteristiques (extreure caracter√≠stiques de diferents objectes)
+% SegmentaciÛ (agrupar els objectes)
+% Caracteristiques (extreure caracterÌstiques de diferents objectes)
 % Predictor (obtenir un vector d'observacions i classificar-les)
 % Aprenentage (usant treebaggers o altres estructures)
 %
 %% PREDICT
+clc
 % Fase I
 I = rgb2gray(imread('Chess figures.png'));
 BW = I < 128;
@@ -16,7 +17,13 @@ BW = medfilt2(BW,[5,5]);
 BW = medfilt2(BW,[5,5]);
 BW = bwareaopen(BW,40);
 CC = bwconncomp(BW);
-% hem de obtenir caracter√≠stiques resistents a canvis com
+
+% open 19
+SE = strel('disk',19);
+B = imopen(BW,SE);
+imshow(B);
+
+% hem de obtenir caracterÌstiques resistents a canvis com
 % rotacions i zooms
 ext = cell2mat(struct2cell(regionprops(CC,'Extent')));
 ecc = cell2mat(struct2cell(regionprops(CC,'Eccentricity')));
@@ -27,8 +34,11 @@ area = cell2mat(struct2cell(regionprops(CC,'Area')));
 
 convexity = area.^2 ./ conv.^2;
 areadivper = area ./ per;
-Obs = [ext;ecc;sol;areadivper;convexity]';
+
+O = [ext;ecc;sol;areadivper;convexity]';
 C = ['B','H','K','P','Q','R']';
 pred = TreeBagger(100,O,C);
 % Fase II
 [Class,Scores] = predict(pred,O);
+Punts = sort(Scores');
+Puntuacio = sum(Punts(6,:)) - sum(Punts(5,:))
