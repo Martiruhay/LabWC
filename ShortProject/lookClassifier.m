@@ -1,18 +1,18 @@
 clc, clear all
-imf = dir('I:\vc\Short Project\*.pgm'); % llista d'imatges amb extensio bmp
+imf = dir('D:\ShortProject\source-images\*.pgm'); % llista d'imatges amb extensio bmp
 n = length(imf); % nombre d'imatges en el directori
 
 for i = 1 : n % N
     namef = imf(i).name;
-    im = imread(strcat('I:\vc\Short Project\', namef));
+    im = imread(strcat('D:\ShortProject\source-images\', namef));
     imshow(im);
     
     prompt = 'Do the eyes look at you? [Y/N]';
     look = input(prompt,'s');
     if (look == 'y')
-        copyfile(strcat('I:\vc\Short Project\', namef),'F:\4th_Cours\VC\_look\')
+        copyfile(strcat('D:\ShortProject\source-images\', namef), 'D:\ShortProject\_look\');
     else
-        copyfile(strcat('I:\vc\Short Project\', namef),'F:\4th_Cours\VC\_noLook\')
+        copyfile(strcat('D:\ShortProject\source-images\', namef), 'D:\ShortProject\_noLook\');
     end
     
 end

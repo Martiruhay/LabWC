@@ -5,14 +5,23 @@
 % 1 script per aprendre i per testejar
 % ratio ulls no ulls = 1:10
 clc, clear all
-imf = dir('C:\Users\Holmez\Downloads\Universitat\4rt Curs 1er Quadri\VC\ShortProject\source-images\*.pgm'); % llista d'imatges amb extensio bmp
-ime = dir('C:\Users\Holmez\Downloads\Universitat\4rt Curs 1er Quadri\VC\ShortProject\source-images\*.eye');
+imf = dir('D:\ShortProject\source-images\*.pgm'); % llista d'imatges amb extensio bmp
+ime = dir('D:\ShortProject\source-images\*.eye');
 n = length(imf); % nombre d'imatges en el directori
 images = zeros([2*n,100,100]); % array n imatges de mida 100 x 100
 eyeIndex = 1;
+
+iml = dir('D:\ShortProject\look\*.pgm');
+imnl = dir('D:\ShortProject\noLook\*.pgm');
+il = 1;
+inl = 1;
+indexl = 1;
+indexnl = 1;
+imagesLook = zeros([length(iml),100,100]);
+imagesNoLook = zeros([length(imnl),100,100]);
 for i = 1 : n % N
     namef = imf(i).name;
-    im = imread(strcat('C:\Users\Holmez\Downloads\Universitat\4rt Curs 1er Quadri\VC\ShortProject\source-images\', namef));
+    im = imread(strcat('D:\ShortProject\source-images\', namef));
     
     s = size(im);
     l = length(s);
@@ -21,7 +30,7 @@ for i = 1 : n % N
     end
     
     eye_name = ime(i).name; 
-    C = importdata(strcat('C:\Users\Holmez\Downloads\Universitat\4rt Curs 1er Quadri\VC\ShortProject\source-images\', eye_name),'');
+    C = importdata(strcat('D:\ShortProject\source-images\', eye_name),'');
     K = cell2mat(cellfun(@str2num, C(2), 'UniformOutput', 0));
         
     ce1 = K(1:2);
@@ -34,8 +43,21 @@ for i = 1 : n % N
 
     images(eyeIndex,:,:) = imresize(E1,[100 100]);
     images(eyeIndex + 1,:,:) = imresize(E2,[100 100]);
-    
     eyeIndex = eyeIndex + 2;
+    
+    if namef == iml(il).name
+        imagesLook(indexl,:,:) = imresize(E1,[100 100]);
+        imagesLook(indexl + 1,:,:) = imresize(E2,[100 100]);
+        indexl = indexl + 2;
+        il = il + 1;
+    else
+        if namef == imnl(inl).name
+            imagesNoLook(indexnl,:,:) = imresize(E1,[100 100]);
+            imagesNoLook(indexnl + 1,:,:) = imresize(E2,[100 100]);
+            indexnl = indexnl + 2;
+            inl = inl + 1;
+        end
+    end
 end
 
 %% store images
