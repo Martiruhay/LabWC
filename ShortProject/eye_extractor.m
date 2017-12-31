@@ -5,14 +5,14 @@
 % 1 script per aprendre i per testejar
 % ratio ulls no ulls = 1:10
 clc, clear all
-imf = dir('C:\Users\wextia\Desktop\short-project\source-images\Short Project\*.pgm'); % llista d'imatges amb extensio bmp
-ime = dir('C:\Users\wextia\Desktop\short-project\source-images\Short Project\*.eye');
+imf = dir('C:\Users\Holmez\Downloads\Universitat\4rt Curs 1er Quadri\VC\ShortProject\source-images\*.pgm'); % llista d'imatges amb extensio bmp
+ime = dir('C:\Users\Holmez\Downloads\Universitat\4rt Curs 1er Quadri\VC\ShortProject\source-images\*.eye');
 n = length(imf); % nombre d'imatges en el directori
 images = zeros([2*n,100,100]); % array n imatges de mida 100 x 100
 eyeIndex = 1;
 for i = 1 : n % N
     namef = imf(i).name;
-    im = imread(strcat('C:\Users\wextia\Desktop\short-project\source-images\Short Project\', namef));
+    im = imread(strcat('C:\Users\Holmez\Downloads\Universitat\4rt Curs 1er Quadri\VC\ShortProject\source-images\', namef));
     
     s = size(im);
     l = length(s);
@@ -21,7 +21,7 @@ for i = 1 : n % N
     end
     
     eye_name = ime(i).name; 
-    C = importdata(strcat('C:\Users\wextia\Desktop\short-project\source-images\Short Project\', eye_name),'');
+    C = importdata(strcat('C:\Users\Holmez\Downloads\Universitat\4rt Curs 1er Quadri\VC\ShortProject\source-images\', eye_name),'');
     K = cell2mat(cellfun(@str2num, C(2), 'UniformOutput', 0));
         
     ce1 = K(1:2);
